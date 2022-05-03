@@ -1,10 +1,24 @@
 import tkinter as tk
+   
+from tkinter import filedialog 
 from PIL import ImageTk, Image 
+
+
 
 # Constantes
 btnHeight = 1
 btnWidth = 20
 imgPath = ""
+
+def browseFiles(): 
+    filename = filedialog.askopenfilename(initialdir = "/", 
+                                          title = "Select a File", 
+                                          filetypes = (("all files", 
+                                                        "*.*"),("Text files", 
+                                                        "*.txt*") 
+                                                       ))  
+    global imgPath 
+    imgPath = filename
 
 # Configuração da tela
 janela = tk.Tk(className= ' Trabalho Prático - Processamento de Imagens')
@@ -19,7 +33,8 @@ titulo = tk.Label(
 btnCarregaDiretorio = tk.Button(
     text="Carregar Diretório",
     height= btnHeight,
-    width= btnWidth
+    width= btnWidth,
+    command= browseFiles
 )
 btnTreinarBase = tk.Button(
     text="Treinar Base",
