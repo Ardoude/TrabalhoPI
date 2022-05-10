@@ -1,3 +1,4 @@
+from imp import reload
 import tkinter as tk
    
 from tkinter import filedialog 
@@ -10,31 +11,19 @@ btnHeight = 1
 btnWidth = 20
 imgPath = ""
 
-def browseFiles(): 
-    filename = filedialog.askopenfilename(initialdir = "/", 
-                                          title = "Select a File", 
-                                          filetypes = (("all files", 
-                                                        "*.*"),("Text files", 
-                                                        "*.txt*") 
-                                                       ))  
-    global imgPath 
-    imgPath = filename
+
 
 # Configuração da tela
 janela = tk.Tk(className= ' Trabalho Prático - Processamento de Imagens')
 janela.geometry("800x600")
+
+    
 
 # Criação de componentes
 titulo = tk.Label(
     text="Trabalho de PI",
     height=2,
     width=10
-)
-btnCarregaDiretorio = tk.Button(
-    text="Carregar Diretório",
-    height= btnHeight,
-    width= btnWidth,
-    command= browseFiles
 )
 btnTreinarBase = tk.Button(
     text="Treinar Base",
@@ -61,12 +50,35 @@ btnClassificar = tk.Button(
     height= btnHeight,
     width= btnWidth
 )
+
 labelImagem = tk.Label(
     text="Imagem",
-    image = imgPath,
     bg="green",
     height=15,
     width=30
+)
+
+
+def browseFiles(): 
+    filename = filedialog.askopenfilename(initialdir = "/", 
+                                          title = "Select a File", 
+                                          filetypes = (("all files", 
+                                                        "*.*"),("Text files", 
+                                                        "*.txt*") 
+                                                       ))  
+    test = tk.PhotoImage(filename)
+    labelImagem.configure(
+        image=test,
+        height=15,
+        width=30
+    )
+    labelImagem.pack()
+
+btnCarregaDiretorio = tk.Button(
+    text="Carregar Diretório",
+    height= btnHeight,
+    width= btnWidth,
+    command= browseFiles
 )
 
 #image1 = Image.open(imgPath)
