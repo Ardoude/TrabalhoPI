@@ -1,23 +1,25 @@
-from imp import reload
+import utils
 import tkinter as tk
-   
-from tkinter import filedialog 
-from PIL import ImageTk, Image 
-
-
+from PIL import ImageTk, Image
 
 # Constantes
-btnHeight = 1
-btnWidth = 20
-imgPath = ""
-
+btnHeight = 1  # Altura padrão dos botões
+btnWidth = 20  # Largura padrão dos botões
+imgPath = None # Imagem a ser classificada
 
 
 # Configuração da tela
 janela = tk.Tk(className= ' Trabalho Prático - Processamento de Imagens')
-janela.geometry("800x600")
-
+janela.geometry("350x500")
     
+
+# Métodos utilitários
+def carregarImagem():
+    filename = utils.browseFiles()
+    imgPath = ImageTk.PhotoImage( Image.open(filename).resize( (255, 255), resample=3) )
+    labelImagem.config(image = imgPath, height=255, width=255)
+    labelImagem.img = imgPath
+
 
 # Criação de componentes
 titulo = tk.Label(
@@ -33,7 +35,8 @@ btnTreinarBase = tk.Button(
 btnAbrirImagem = tk.Button(
     text="Abrir Imagem",
     height= btnHeight,
-    width= btnWidth
+    width= btnWidth,
+    command= carregarImagem
 )
 btnCalcularCaracteristicas = tk.Button(
     text="Calcular Características",
@@ -50,38 +53,17 @@ btnClassificar = tk.Button(
     height= btnHeight,
     width= btnWidth
 )
-
 labelImagem = tk.Label(
-    text="Imagem",
-    bg="green",
+    image=imgPath,
     height=15,
     width=30
 )
-
-
-def browseFiles(): 
-    filename = filedialog.askopenfilename(initialdir = "/", 
-                                          title = "Select a File", 
-                                          filetypes = (("all files", 
-                                                        "*.*"),("Text files", 
-                                                        "*.txt*") 
-                                                       ))  
-    test = tk.PhotoImage(filename)
-    labelImagem.configure(
-        image=test,
-        height=15,
-        width=30
-    )
-    labelImagem.pack()
-
 btnCarregaDiretorio = tk.Button(
     text="Carregar Diretório",
     height= btnHeight,
     width= btnWidth,
-    command= browseFiles
 )
 
-#image1 = Image.open(imgPath)
 
 # Adicionar componentes à tela
 titulo.pack()
