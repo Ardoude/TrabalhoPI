@@ -1,3 +1,4 @@
+from fileinput import filename
 import utils
 import tkinter as tk
 from PIL import ImageTk, Image
@@ -6,7 +7,7 @@ from PIL import ImageTk, Image
 btnHeight = 1  # Altura padrão dos botões
 btnWidth = 20  # Largura padrão dos botões
 imgPath = None # Imagem a ser classificada
-
+filename = ""
 
 # Configuração da tela
 janela = tk.Tk(className= ' Trabalho Prático - Processamento de Imagens')
@@ -15,10 +16,15 @@ janela.geometry("350x500")
 
 # Métodos utilitários
 def carregarImagem():
+    global filename
     filename = utils.browseFiles()
     imgPath = ImageTk.PhotoImage( Image.open(filename).resize( (255, 255), resample=3) )
     labelImagem.config(image = imgPath, height=255, width=255)
     labelImagem.img = imgPath
+
+def calcCaract():
+    print(filename)
+    utils.entrophy(filename)
 
 
 # Criação de componentes
@@ -41,7 +47,8 @@ btnAbrirImagem = tk.Button(
 btnCalcularCaracteristicas = tk.Button(
     text="Calcular Características",
     height= btnHeight,
-    width= btnWidth
+    width= btnWidth,
+    command=calcCaract
 )
 btnRecortarImagem = tk.Button(
     text="Recortar Imagem",
