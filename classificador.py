@@ -27,7 +27,7 @@ def treinarBase():
 
     X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.25) # 75% treino e 25% teste
 
-    clf = svm.SVC(kernel='rbf', C=1, gamma=1) # Classificador
+    clf = svm.SVC(kernel='linear', C=1, gamma=1) # Classificador
 
     # Treinar
     tInicial = time.time()
@@ -38,7 +38,7 @@ def treinarBase():
     tInicial = time.time()
     y_pred = clf.predict(X_test)
     tClassificacao = time.time() - tInicial
-
+    
     # Obter dados
     accuracy = metrics.accuracy_score(y_test, y_pred)
     confMatrix = confusion_matrix(y_test, y_pred)

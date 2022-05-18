@@ -1,4 +1,3 @@
-from fileinput import filename
 from pickle import FALSE, TRUE
 import utils
 import tkinter as tk
@@ -24,13 +23,14 @@ janela.geometry("350x500")
 def carregarImagem():
     global filename
     filename = utils.browseFiles()
-    imgSelecionada = ImageTk.PhotoImage( Image.open(filename).resize( (255, 255), resample=3) )
-    labelImagem.config(image = imgSelecionada, height=255, width=255)
-    labelImagem.img = imgSelecionada
-    # Ativar botões
-    btnCalcularCaracteristicas.config(state=ACTIVE)
-    if baseTreinada == TRUE:
-        btnClassificar.config(state=ACTIVE)
+    if filename!="":
+        imgSelecionada = ImageTk.PhotoImage( Image.open(filename).resize( (255, 255), resample=3) )
+        labelImagem.config(image = imgSelecionada, height=255, width=255)
+        labelImagem.img = imgSelecionada
+        # Ativar botões
+        btnCalcularCaracteristicas.config(state=ACTIVE)
+        if baseTreinada == TRUE:
+            btnClassificar.config(state=ACTIVE)
 
 # Calcular Entropia, Homogeneidade e energia da imagem selecionada
 def calcCaract():
@@ -44,7 +44,7 @@ def calcCaract():
     tk.Label( novaJanela, text="CARACTERÍSTICAS\n").pack()
     tk.Label( novaJanela, text="Entropia: " + str(entropia)).pack()
     tk.Label( novaJanela, text="Homogeneidade e energia para as 5 matrizes e seus ângulos de rotação\n" + str(caracteristicas)).pack()
-    tk.Label( novaJanela, text="Tempo gasto: " + str(round(tempoGasto, 3)) + "s").pack()
+    tk.Label( novaJanela, text="Tempo gasto: " + str(round(tempoGasto, 4)) + "s").pack()
     #tk.Label( novaJanela, image=imgProcessada, height=255, width=255).pack() # Exibe imagem processada
     novaJanela.mainloop()
 
@@ -52,7 +52,8 @@ def calcCaract():
 def carregaDiretorio():
     global dirPath
     dirPath = askdirectory(title='Selecione a Pasta')
-    btnTreinarBase.config(state=ACTIVE)
+    if dirPath!="":
+        btnTreinarBase.config(state=ACTIVE)
 
 # Treina base de dados
 def treinarBase():
@@ -69,8 +70,8 @@ def treinarBase():
         tk.Label( novaJanela, text="Accuracy: " + str(accuracy)).pack()
         tk.Label( novaJanela, text="Sensibilidade: " + str(sensibilidade)).pack()
         tk.Label( novaJanela, text="Especificidade: " + str(especificidade)).pack()
-        tk.Label( novaJanela, text="Tempo de treino" + str(round(tempoTreino, 3)) + "s").pack()
-        tk.Label( novaJanela, text="Tempo gasto classificando: " + str(round(tempoClassificacao, 3)) + "s").pack()
+        tk.Label( novaJanela, text="Tempo de treino: " + str(round(tempoTreino, 4)) + "s").pack()
+        tk.Label( novaJanela, text="Tempo gasto classificando: " + str(round(tempoClassificacao, 4)) + "s").pack()
         tk.Label( novaJanela, text="Tempo gasto extraindo informações da base: " + str(round(tempoProcessamento, 3)) + "s").pack()
         tk.Label( novaJanela, text="Matriz de Confusão\n" + str(matrizDeConfusao)).pack()
         # Ativar botões

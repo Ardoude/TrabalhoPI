@@ -28,6 +28,7 @@ def calcCaract(img, details):
     global grayImg
     # Converte para tons de cinza
     rgbImg = io.imread(img)
+    
     tempoInicial = time.time()
     if len(rgbImg.shape) == 2: #Já está em tom de cinza
         grayImg = img_as_ubyte(rgbImg)
